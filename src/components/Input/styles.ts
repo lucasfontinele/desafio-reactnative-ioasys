@@ -6,4 +6,5 @@ export const Container = styled.TextInput`
   border-radius: 5px;
   height: 56px;
   padding-left: 16px;
+  font-family: Poppins-Medium;
 `;

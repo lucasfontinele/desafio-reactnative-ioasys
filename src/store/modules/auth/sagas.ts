@@ -2,10 +2,12 @@ import {takeLatest, call, put, all} from 'redux-saga/effects';
 import Toast from 'react-native-toast-message';
 
 import {api} from '../../../services/api';
-import {IAuthResponse} from '../user/types';
+import {IAuthResponse} from '../investor/types';
 
-import { HANDLE_SIGN_IN, HandleSignInAction, RequestHeaders } from './types';
+import { HANDLE_SIGN_REQUEST, HandleSignInAction, RequestHeaders } from './types';
 import { handleFetching, handleSignIn } from './actions';
+
+import { handleInvestor } from '../investor/actions';
 
 type RequestAuthResponse = {
   data: IAuthResponse;
@@ -13,8 +15,6 @@ type RequestAuthResponse = {
 };
 
 export function* signIn({ payload }: HandleSignInAction) {
-  yield put(handleFetching(true));
-
   try {
     const { email, password } = payload;
 
@@ -28,6 +28,8 @@ export function* signIn({ payload }: HandleSignInAction) {
       client: headers.client,
       uid: headers.uid,
     };
+
+    yield put(handleInvestor(data.investor));
 
     yield put(handleSignIn(requestHeaders));
 
@@ -48,5 +50,5 @@ export function* signIn({ payload }: HandleSignInAction) {
 }
 
 export default all([
-  takeLatest(HANDLE_SIGN_IN, signIn),
+  takeLatest(HANDLE_SIGN_REQUEST, signIn),
 ]);

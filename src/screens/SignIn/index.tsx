@@ -1,10 +1,14 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 
 import {StyleSheet, View, Platform, Keyboard} from 'react-native';
 import {useTheme} from 'styled-components';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import Toast from 'react-native-toast-message';
+
+import {useSelector, useDispatch} from 'react-redux';
+
+import { ApplicationState } from '../../store/createStore';
+import { handleSignInRequest, handleFetching } from '../../store/modules/auth/actions';
 
 import logoImg from '../../assets/images/logo_ioasys.png';
 
@@ -12,47 +16,26 @@ import {Input} from '../../components/Input';
 import {Button} from '../../components/Button';
 import {Text} from '../../components/Text';
 
-import {api} from 'src/services/api';
-
 import {formValidation, FormValues} from './yup';
 
 import {Container, FormContainer, Logo} from './styles';
 
 function SignIn() {
+  const dispatch = useDispatch();
+
   const theme = useTheme();
   const passwordInputRef = useRef(null);
-  const [fetching, setFetching] = useState(false);
+  const { fetching } = useSelector((state: ApplicationState) => state.auth);
 
   const { control, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(formValidation),
   });
 
   const onSubmit = async ({ email, password }: FormValues) => {
-    setFetching(true);
     Keyboard.dismiss();
 
-    try {
-      const body = {
-        email,
-        password,
-      };
-
-      const { data, headers } = await api.post('/users/auth/sign_in', body);
-
-      Toast.show({
-        text1: 'Sucesso',
-        text2: 'Aguarde enquanto buscamos os dados das empresas',
-        type: 'success',
-      });
-    } catch {
-      Toast.show({
-        text1: 'Oops!',
-        text2: 'Erro ao validar as credenciais, e-mail ou senha incorretos.',
-        type: 'error',
-      });
-    } finally {
-      setFetching(false);
-    }
+    dispatch(handleFetching(true));
+    dispatch(handleSignInRequest(email, password));
   };
 
   return (

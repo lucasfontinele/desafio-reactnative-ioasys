@@ -1,3 +1,5 @@
+export const HANDLE_INVESTOR = '@investor/HANDLE_INVESTOR';
+
 export interface Portfolio {
   enterprises_number: number;
   enterprises: any[];
@@ -23,8 +25,13 @@ export interface IAuthResponse {
   success: boolean;
 }
 
-export interface RequestHeaders {
-  accessToken: string;
-  client: string;
-  uid: string;
+export type InvestorState = {
+  investor?: Investor;
 }
+
+export type HandleInvestor = {
+  type: typeof HANDLE_INVESTOR;
+  payload: Investor;
+};
+
+export type InvestorActions = HandleInvestor;

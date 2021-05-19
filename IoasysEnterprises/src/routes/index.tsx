@@ -1,15 +1,12 @@
 import React from 'react';
 
-import UnAuthentiatedRoutes from './UnAuthenticatedRoutes';
+import UnAuthenticatedRoutes from './UnAuthenticatedRoutes';
 // import AuthenticatedRoutes from './AuthenticatedRoutes';
 
-const Router: React.FC = () => {
+export const Router: React.FC = () => {
   return (
     <>
-      <UnAuthentiatedRoutes />
-      {/* <AuthenticatedRoutes /> */}
+      <UnAuthenticatedRoutes />
     </>
   );
 };
-
-export default Router;

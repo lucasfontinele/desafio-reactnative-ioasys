@@ -1,6 +1,8 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { Text, TouchableOpacity } from 'react-native';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { Container } from './styles';
 
@@ -8,12 +10,14 @@ import { Container } from './styles';
 //   children: ReactNode;
 // }
 
+Icon.loadFont();
+
 export function Button() {
   return (
     <TouchableOpacity onPress={() => {}}>
       <Container>
-        <Text>Button</Text>
-        {/* {children} */}
+        <Text style={{ fontFamily: 'Poppins-Bold' }}>Button</Text>
+        {/* <Icon name="users" /> */}
       </Container>
     </TouchableOpacity>
   );

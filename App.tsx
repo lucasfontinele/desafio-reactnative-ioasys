@@ -5,6 +5,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from 'styled-components/native';
 import Toast from 'react-native-toast-message';
 
+import { Provider } from 'react-redux';
+
+import { store } from './src/store/index';
 import {Router} from './src/routes';
 
 // Theme
@@ -12,17 +15,19 @@ import theme from './src/styles/Global';
 
 const App = () => {
   return (
-    <View style={styles.viewContainer}>
-      <StatusBar backgroundColor="blue" barStyle="light-content" />
-      <SafeAreaView style={styles.safeAreaContainer}>
-        <ThemeProvider theme={theme}>
-          <NavigationContainer>
-            <Router />
-          </NavigationContainer>
-        </ThemeProvider>
-      </SafeAreaView>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
-    </View>
+    <Provider store={store}>
+      <View style={styles.viewContainer}>
+        <StatusBar backgroundColor="blue" barStyle="light-content" />
+        <SafeAreaView style={styles.safeAreaContainer}>
+          <ThemeProvider theme={theme}>
+            <NavigationContainer>
+              <Router />
+            </NavigationContainer>
+          </ThemeProvider>
+        </SafeAreaView>
+        <Toast ref={(ref) => Toast.setRef(ref)} />
+      </View>
+    </Provider>
   );
 };
 

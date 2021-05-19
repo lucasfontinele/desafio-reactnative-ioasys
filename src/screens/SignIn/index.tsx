@@ -1,15 +1,19 @@
 import React from 'react';
 
 import {Text} from 'react-native';
-import {TextInput} from 'react-native-paper';
+
+import {Input} from '../../components/Input';
+import {Button} from '../../components/Button';
 
 import {Container} from './styles';
 
 function SignIn() {
   return (
     <Container>
-      <Text style={{color: '#000'}}>SignIn</Text>
-      <TextInput />
+      <Text>SignIn</Text>
+      <Input />
+      <Input />
+      <Button />
     </Container>
   );
 }

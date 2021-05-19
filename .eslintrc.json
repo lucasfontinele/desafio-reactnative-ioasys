@@ -20,7 +20,7 @@
       "sourceType": "module"
     },
     "plugins": [
-      "vue",
+      "react",
       "@typescript-eslint",
       "react-hooks",
       "prettier"

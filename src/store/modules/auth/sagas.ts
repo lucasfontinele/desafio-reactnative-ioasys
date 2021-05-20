@@ -20,9 +20,6 @@ export function* signIn({ payload }: HandleSignInAction) {
 
     const { data, headers }: RequestAuthResponse = yield call(api.post, '/users/auth/sign_in', { email, password });
 
-    // Armazena informações do usuário logado
-
-    // Armazena informações dos headers de requisição
     const requestHeaders: RequestHeaders = {
       accessToken: headers.accessToken,
       client: headers.client,

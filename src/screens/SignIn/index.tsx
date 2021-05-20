@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 
 import {StyleSheet, View, Platform, Keyboard} from 'react-native';
 import {useTheme} from 'styled-components';
@@ -26,6 +26,7 @@ function SignIn() {
   const theme = useTheme();
   const passwordInputRef = useRef(null);
   const { fetching } = useSelector((state: ApplicationState) => state.auth);
+  const [loading, setLoading] = useState(false);
 
   const { control, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: yupResolver(formValidation),
@@ -34,9 +35,16 @@ function SignIn() {
   const onSubmit = async ({ email, password }: FormValues) => {
     Keyboard.dismiss();
 
+    setLoading(true);
     dispatch(handleFetching(true));
     dispatch(handleSignInRequest(email, password));
   };
+
+  useEffect(() => {
+    if (!fetching) {
+      setLoading(false);
+    }
+  }, [fetching]);
 
   return (
     <Container
@@ -94,7 +102,7 @@ function SignIn() {
         <Button
           onPress={handleSubmit(onSubmit)}
           containerStyle={!errors.password ? styles.submitButtonContainer : styles.submittedButtonError}
-          loading={fetching}
+          loading={loading}
         >
           <Text color={theme.colors.shape} weight="bold" size={14}>
             Acessar
